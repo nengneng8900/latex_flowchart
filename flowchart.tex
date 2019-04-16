@@ -1,6 +1,13 @@
+% Tex Flowchart Demo
+% Original Author: Brent Longborough
+% Modification Author: Eric Wang
 \documentclass[x11names]{article}
 \usepackage{tikz}
 \usetikzlibrary{shapes,arrows,chains}
+
+% Chinese Language Support
+%\usepackage[UTF8]{ctex}
+
 \begin{document}
 % =================================================
 % Set up a few colours
@@ -8,11 +15,12 @@
 \colorlet{lcnorm}{Blue3}
 \colorlet{lccong}{Red3}
 % -------------------------------------------------
-% Set up a new layer for the debugging marks, and make sure it is on
-% top
+% Set up new layers for the debugging marks
+% \pgfsetlayers sets the order of layers
 \pgfdeclarelayer{marx}
 \pgfdeclarelayer{background}
 \pgfsetlayers{background,marx}
+
 % A macro for marking coordinates (specific to the coordinate naming
 % scheme used here). Swap the following 2 definitions to deactivate
 % marks.
@@ -27,7 +35,7 @@
 \begin{tikzpicture}[%
     >=triangle 60,              % Nice arrows; your taste may be different
     start chain=going below,    % General flow is top-to-bottom
-    node distance=6mm and 60mm, % Global setup of box spacing
+    node distance=6mm and 60mm, % Global setup of box spacing, change 60mm for distance
     every join/.style={norm},   % Default linetype for connecting boxes
     ]
 
@@ -42,6 +50,7 @@
   test/.style={base, diamond, aspect=2, text width=5em},
   term/.style={proc, rounded corners},
   % coord node style is used for placing corners of connecting lines
+  % change 25mm for node distance
   coord/.style={coordinate, on chain, on grid, node distance=6mm and 25mm},
   % nmark node style is used for coordinate debugging marks
   nmark/.style={draw, cyan, circle, font={\sffamily\bfseries}},
@@ -53,8 +62,8 @@
   it/.style={font={\small\itshape}}
 }
 
-
-
+% ------------------------------------------------- 
+% Start the settings of layer marx
 \begin{pgfonlayer}{marx}
 % -------------------------------------------------
 % Start by placing the nodes
@@ -91,6 +100,7 @@
 % -------------------------------------------------
 % Now we place the coordinate nodes for the connectors with angles, or
 % with annotations. We also mark them for debugging.
+% Delete \cmark to make numbers disappear
 \node [coord, right=of t1] (c1)  {}; \cmark{1}   
 \node [coord, right=of t3] (c3)  {}; \cmark{3}   
 \node [coord, right=of t6] (c6)  {}; \cmark{6}   
@@ -157,7 +167,6 @@
 \node [above=-12mm of big1, it] at (8,0) {(Iteration1)};
 \node [proc, fill=red!15, dotted, thick,text height=5cm, text width=13cm]  at (3,-9) (big2) {};
 \node [above=-12mm of big2, it] at (8,-9) {(Iteration2)};
-
 \end{pgfonlayer}
 
 
